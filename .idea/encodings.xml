@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/mktech/testaddapp/CommonMethods.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/mktech/testaddapp/Constants.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/mktech/testaddapp/MyRecyclerView.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/mktech/testaddapp/entity/HotAppInfo.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/backgr.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/add.png" charset="GBK" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>
