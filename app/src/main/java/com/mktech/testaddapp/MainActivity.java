@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 	private HeaderAndFooterWrapper		mHeaderAndFooterWrapper;
 	private LoadMoreWrapper				mLoadMoreWrapper;
 	private List<HotAppInfo>			mData;
-	private AppinfoHandle mAppinfoHandle;
+	private AppinfoHandle				mAppinfoHandle;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -58,18 +58,18 @@ public class MainActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_main);
 		mRecyclerView = (RecyclerView) findViewById(R.id.recyler);
 		mPackageManager = getPackageManager();
-		mButton= (Button) findViewById(R.id.buttonadd);
+		mButton = (Button) findViewById(R.id.buttonadd);
 		initData();
 		initRecycle();
 	}
-
+	
 	private void initHeaderAndFooter() {
 		mHeaderAndFooterWrapper = new HeaderAndFooterWrapper(mAdapter);
 		Button button = new Button(this);
 		button.setBackgroundResource(R.mipmap.add);
 		mHeaderAndFooterWrapper.addFootView(button);
 	}
-
+	
 	private void initRecycle() {
 		mLayoutManager = new LinearLayoutManager(this);
 		mLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -78,9 +78,9 @@ public class MainActivity extends AppCompatActivity {
 			@Override
 			protected void convert(ViewHolder holder, HotAppInfo hotAppInfo, int position) {
 				holder.setImageDrawable(R.id.image, hotAppInfo.getDrawableIcon());
-				BitmapDrawable bitmapDrawable= (BitmapDrawable) hotAppInfo.getDrawableIcon();
-				Bitmap bitmap=bitmapDrawable.getBitmap();
-				holder.setImageBitmap(R.id.image,ImageUtil.getRoundedCornerBitmap(bitmap,5));
+				BitmapDrawable bitmapDrawable = (BitmapDrawable) hotAppInfo.getDrawableIcon();
+				Bitmap bitmap = bitmapDrawable.getBitmap();
+				holder.setImageBitmap(R.id.image, ImageUtil.getRoundedCornerBitmap(bitmap, 5));
 				holder.getConvertView().setOnFocusChangeListener(new View.OnFocusChangeListener() {
 					@Override
 					public void onFocusChange(View v, boolean hasFocus) {
@@ -91,62 +91,57 @@ public class MainActivity extends AppCompatActivity {
 						}
 					}
 				});
-
+				
 			}
 		};
-
+		
 		mRecyclerView.setAdapter(mAdapter);
 		mAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
 			@Override
 			public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-
+				
 				startApp(mList.get(position).getPackageName());
-
+				
 			}
-
+			
 			@Override
 			public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
-
-				if (mList.get(position).getPackageName().equals("com.excellence.youtube"))
-				{
+				
+				if (mList.get(position).getPackageName().equals("com.excellence.youtube")) {
 					return false;
 				}
 				mAdapter.notifyItemRemoved(position);
 				mList.remove(position);
 				mAdapter.notifyDataSetChanged();
-				if (mAdapter.getItemCount()<8)
-				{
+				if (mAdapter.getItemCount() < 8) {
 					mButton.setVisibility(View.VISIBLE);
 				}
 				return false;
 			}
 		});
-
+		
 	}
-
+	
 	private void initData() {
-		mAppinfoHandle=new AppinfoHandle(this);
+		mAppinfoHandle = new AppinfoHandle(this);
 		mList = new ArrayList<>();
 		mList.clear();
-		mList=mAppinfoHandle.getHotAppinfo();
-		Log.i("test",mList.size()+"");
-		if (mList.size()==0)
-		{
+		mList = mAppinfoHandle.getHotAppinfo();
+		Log.i("test", mList.size() + "");
+		if (mList.size() == 0) {
 			mList.add(obtainAppinfo("com.excellence.youtube"));
 			mAppinfoHandle.addHotAppinfo(obtainAppinfo("com.excellence.youtube"));
-		}else {
-			for (int i=0;i<mList.size();i++)
-			{
-				HotAppInfo hotAppInfo=mList.get(i);
-				hotAppInfo=obtainAppinfo(hotAppInfo.getPackageName());
+		} else {
+			for (int i = 0; i < mList.size(); i++) {
+				HotAppInfo hotAppInfo = mList.get(i);
+				hotAppInfo = obtainAppinfo(hotAppInfo.getPackageName());
 				mList.remove(i);
-				mList.add(i,hotAppInfo);
+				mList.add(i, hotAppInfo);
 			}
 		}
-
-
+		
 	}
-
+	
 	private HotAppInfo obtainAppinfo(String name) {
 		HotAppInfo hotAppInfo = null;
 		try {
@@ -156,14 +151,14 @@ public class MainActivity extends AppCompatActivity {
 			e.printStackTrace();
 		}
 		return hotAppInfo;
-
+		
 	}
 	public void startApp(String name) {
 		Intent intent = getPackageManager().getLaunchIntentForPackage(name);
 		if (intent != null) {
 			startActivity(intent);
 		}
-
+		
 	}
 	public void addApp(View view) {
 		showPopWindow(view);
@@ -202,20 +197,18 @@ public class MainActivity extends AppCompatActivity {
 			public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
 				mList.add(mData.get(position));
 				mAdapter.notifyDataSetChanged();
-				if (mAdapter.getItemCount()==8)
-				{
+				if (mAdapter.getItemCount() == 8) {
 					mButton.setVisibility(View.GONE);
 				}
 				mAppinfoHandle.addHotAppinfo(mData.get(position));
 			}
-
+			
 			@Override
 			public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
 				return false;
 			}
 		});
 		recyclerView.setAdapter(commonAdapter);
-
 		
 		popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 	}
